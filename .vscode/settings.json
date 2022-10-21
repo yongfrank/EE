@@ -1,108 +1,107 @@
 {
-    "editor.fontSize": 16,
-    "window.zoomLevel": 0,
-    "explorer.confirmDelete": true,
-    "launch": {
-      "configurations": [],
-      "compounds": []
-    },
-    // 头部注释
-    "fileheader.customMade": {
-      // Author字段是文件的创建者 可以在specialOptions中更改特殊属性
-      // 公司项目和个人项目可以配置不同的用户名与邮箱 搜索: gitconfig includeIf  比如: https://ayase.moe/2021/03/09/customized-git-config/
-      // 自动提取当前git config中的: 用户名、邮箱
-      "Author": "git config user.name", // 同时获取用户名与邮箱
-      // "Author": "git config user.name", // 仅获取用户名
-      // "Author": "git config user.email", // 仅获取邮箱
-      // "Author": "OBKoro1", // 写死的固定值 不从git config中获取
-      "Date": "Do not edit", // 文件创建时间(不变)
-      // LastEditors、LastEditTime、FilePath将会自动更新 如果觉得时间更新的太频繁可以使用throttleTime(默认为1分钟)配置更改更新时间。
-      "LastEditors": "git config user.name", // 文件最后编辑者 与Author字段一致
-      // 由于编辑文件就会变更最后编辑时间，多人协作中合并的时候会导致merge
-      // 可以将时间颗粒度改为周、或者月，这样冲突就减少很多。搜索变更时间格式: dateFormat
-      "LastEditTime": "Do not edit", // 文件最后编辑时间
-      // 输出相对路径，类似: /文件夹名称/src/index.js
-      "FilePath": "Do not edit", // 文件在项目中的相对路径 自动更新
-      // 插件会自动将光标移动到Description选项中 方便输入 Description字段可以在specialOptions更改
-      "Description": "", // 介绍文件的作用、文件的入参、出参。
-      // custom_string_obkoro1~custom_string_obkoro100都可以输出自定义信息
-      // 可以设置多条自定义信息 设置个性签名、留下QQ、微信联系方式、输入空行等
-      "custom_string_obkoro1": "",
-      // 版权声明 保留文件所有权利 自动替换年份 获取git配置的用户名和邮箱
-      // 版权声明获取git配置, 与Author字段一致: ${git_name} ${git_email} ${git_name_email}
-      "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by ${git_name}, All Rights Reserved. "
-      // "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by ${git_name_email}, All Rights Reserved. "
-      // "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by 写死的公司名/用户名, All Rights Reserved. "
-    },
-    // 函数注释
-    "fileheader.cursorMode": {
-      "description": "", // 函数注释生成之后，光标移动到这里
-      "param": "", // param 开启函数参数自动提取 需要将光标放在函数行或者函数上方的空白行
-      "return": "",
-    }
-    
-    // --------------------------------------------------------------------------------------
-    // Code Runner
-    // To run code:
-    //   use shortcut "Ctrl Opt N" *
-    //   or press F1 and then select/type Run Code,
-    //   or right click the Text Editor and then click Run Code in editor context menu
-    //   or click Run Code button in editor title menu
-    //   or click Run Code button in context menu of file explorer
-    // To stop the running code:
-    //   use shortcut "Ctrl Opt M" *
-    //   or press F1 and then select/type Stop Code Run
-    //   or right click the Output Channel and then click Stop Code Run in context menu
-    "code-runner.executorMap": {
-      // Introduction:
-      //   Make sure the executor PATH of each language is set in the environment variable.
-      //   You could also add entry into "code-runner.executorMap" to set the executor PATH.
-      // Supported customized parameters:
-      //   $workspaceRoot: The path of the folder opened in VS Code
-      //   $dir: The directory of the code file being run
-      //   $fullFileName: The full name of the code file being run
-      //   $fileName: The base name of the code file being run, that is the file without the directory
-      //   $fileNameWithoutExt: The base name of the code file being run without its extension
-      //   -O2 o2 Optimization
-      /* ------ 编译、运行只有一个文件的cpp文件 ------ */
-      // 注：路径中有空格不会出现问题
-      "cpp": "g++ $fullFileName -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c++17 && $dir\"$fileNameWithoutExt\"\".out\"",
-      // 其中 $fullFileName 是绝对路径，是主文件
-      // 自己决定是否加入 && rm $dir\"$fileNameWithoutExt\"\".out\"（也可以添加"files.exclude"）
-      /* ------ 编译、运行多个cpp文件 ------ */
-      // "cpp": "g++ $fullFileName <file_to_link> -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c++17 && $dir\"$fileNameWithoutExt\"\".out\"",
-      // <file_to_link>的写法：
-      //   一般的，你也可以直接写绝对路径
-      //     \"/path/xxxx.cpp\"
-      //   如果你链接的cpp文件和主文件在一个目录下：
-      //     $dir\"xxxx.cpp\"
-      //   更一般的，如果你链接的cpp文件不和主文件在一个目录下，需要从当前VSCode的工作目录补充相对路径从而形成绝对路径：
-      //     $workspaceRoot\"relative/path/xxxx.cpp\"
-      /* ------ 编译c文件 ------ */
-      "c": "gcc $fullFileName -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c17 && $dir\"$fileNameWithoutExt\"\".out\"",
-      // "c": "gcc $fullFileName <file_to_link> -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c17 && $dir\"$fileNameWithoutExt\"\".out\"",
-    },
-    // Whether to clear previous output before each run (default is false):
-    "code-runner.clearPreviousOutput": true,
-    // Whether to save all files before running (default is false):
-    "code-runner.saveAllFilesBeforeRun": false,
-    // Whether to save the current file before running (default is false):
-    "code-runner.saveFileBeforeRun": true,
-    // Whether to show extra execution message like [Running] ... and [Done] ... (default is true):
-    "code-runner.showExecutionMessage": true, // cannot see that message is you set "code-runner.runInTerminal" to true
-    // Whether to run code in Integrated Terminal (only support to run whole file in Integrated Terminal, neither untitled file nor code snippet) (default is false):
-    "code-runner.runInTerminal": true, // cannot input data when setting to false
-    // Whether to preserve focus on code editor after code run is triggered (default is true, the code editor will keep focus; when it is false, Terminal or Output Channel will take focus):
-    "code-runner.preserveFocus": false,
-    // Whether to ignore selection to always run entire file. (Default is false)
-    "code-runner.ignoreSelection": true,
-    "files.associations": {
-      "ios": "cpp",
-      "iostream": "cpp"
-    },
-    "files.exclude": {
-      "**/*.out": true,
-      "**/*.class": true,
-    },
-    // ---------------------------------------------------------------------
-  }
+  "editor.fontSize": 16,
+  "window.zoomLevel": 0,
+  "explorer.confirmDelete": true,
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  // 头部注释
+  "fileheader.customMade": {
+    // Author字段是文件的创建者 可以在specialOptions中更改特殊属性
+    // 公司项目和个人项目可以配置不同的用户名与邮箱 搜索: gitconfig includeIf  比如: https://ayase.moe/2021/03/09/customized-git-config/
+    // 自动提取当前git config中的: 用户名、邮箱
+    "Author": "git config user.name", // 同时获取用户名与邮箱
+    // "Author": "git config user.name", // 仅获取用户名
+    // "Author": "git config user.email", // 仅获取邮箱
+    // "Author": "OBKoro1", // 写死的固定值 不从git config中获取
+    "Date": "Do not edit", // 文件创建时间(不变)
+    // LastEditors、LastEditTime、FilePath将会自动更新 如果觉得时间更新的太频繁可以使用throttleTime(默认为1分钟)配置更改更新时间。
+    "LastEditors": "git config user.name", // 文件最后编辑者 与Author字段一致
+    // 由于编辑文件就会变更最后编辑时间，多人协作中合并的时候会导致merge
+    // 可以将时间颗粒度改为周、或者月，这样冲突就减少很多。搜索变更时间格式: dateFormat
+    "LastEditTime": "Do not edit", // 文件最后编辑时间
+    // 输出相对路径，类似: /文件夹名称/src/index.js
+    "FilePath": "Do not edit", // 文件在项目中的相对路径 自动更新
+    // 插件会自动将光标移动到Description选项中 方便输入 Description字段可以在specialOptions更改
+    "Description": "", // 介绍文件的作用、文件的入参、出参。
+    // custom_string_obkoro1~custom_string_obkoro100都可以输出自定义信息
+    // 可以设置多条自定义信息 设置个性签名、留下QQ、微信联系方式、输入空行等
+    "custom_string_obkoro1": "",
+    // 版权声明 保留文件所有权利 自动替换年份 获取git配置的用户名和邮箱
+    // 版权声明获取git配置, 与Author字段一致: ${git_name} ${git_email} ${git_name_email}
+    "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by ${git_name}, All Rights Reserved. "
+    // "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by ${git_name_email}, All Rights Reserved. "
+    // "custom_string_obkoro1_copyright": "Copyright (c) ${now_year} by 写死的公司名/用户名, All Rights Reserved. "
+  },
+  // 函数注释
+  "fileheader.cursorMode": {
+    "description": "", // 函数注释生成之后，光标移动到这里
+    "param": "", // param 开启函数参数自动提取 需要将光标放在函数行或者函数上方的空白行
+    "return": "",
+  },
+  // --------------------------------------------------------------------------------------
+  // Code Runner
+  // To run code:
+  //   use shortcut "Ctrl Opt N" *
+  //   or press F1 and then select/type Run Code,
+  //   or right click the Text Editor and then click Run Code in editor context menu
+  //   or click Run Code button in editor title menu
+  //   or click Run Code button in context menu of file explorer
+  // To stop the running code:
+  //   use shortcut "Ctrl Opt M" *
+  //   or press F1 and then select/type Stop Code Run
+  //   or right click the Output Channel and then click Stop Code Run in context menu
+  "code-runner.executorMap": {
+    // Introduction:
+    //   Make sure the executor PATH of each language is set in the environment variable.
+    //   You could also add entry into "code-runner.executorMap" to set the executor PATH.
+    // Supported customized parameters:
+    //   $workspaceRoot: The path of the folder opened in VS Code
+    //   $dir: The directory of the code file being run
+    //   $fullFileName: The full name of the code file being run
+    //   $fileName: The base name of the code file being run, that is the file without the directory
+    //   $fileNameWithoutExt: The base name of the code file being run without its extension
+    //   -O2 o2 Optimization
+    /* ------ 编译、运行只有一个文件的cpp文件 ------ */
+    // 注：路径中有空格不会出现问题
+    "cpp": "g++ $fullFileName -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c++17 && $dir\"$fileNameWithoutExt\"\".out\"",
+    // 其中 $fullFileName 是绝对路径，是主文件
+    // 自己决定是否加入 && rm $dir\"$fileNameWithoutExt\"\".out\"（也可以添加"files.exclude"）
+    /* ------ 编译、运行多个cpp文件 ------ */
+    // "cpp": "g++ $fullFileName <file_to_link> -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c++17 && $dir\"$fileNameWithoutExt\"\".out\"",
+    // <file_to_link>的写法：
+    //   一般的，你也可以直接写绝对路径
+    //     \"/path/xxxx.cpp\"
+    //   如果你链接的cpp文件和主文件在一个目录下：
+    //     $dir\"xxxx.cpp\"
+    //   更一般的，如果你链接的cpp文件不和主文件在一个目录下，需要从当前VSCode的工作目录补充相对路径从而形成绝对路径：
+    //     $workspaceRoot\"relative/path/xxxx.cpp\"
+    /* ------ 编译c文件 ------ */
+    "c": "gcc $fullFileName -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c17 && $dir\"$fileNameWithoutExt\"\".out\"",
+    // "c": "gcc $fullFileName <file_to_link> -o $dir\"$fileNameWithoutExt\"\".out\" -W -Wall -O2 -std=c17 && $dir\"$fileNameWithoutExt\"\".out\"",
+  },
+  // Whether to clear previous output before each run (default is false):
+  "code-runner.clearPreviousOutput": true,
+  // Whether to save all files before running (default is false):
+  "code-runner.saveAllFilesBeforeRun": false,
+  // Whether to save the current file before running (default is false):
+  "code-runner.saveFileBeforeRun": true,
+  // Whether to show extra execution message like [Running] ... and [Done] ... (default is true):
+  "code-runner.showExecutionMessage": true, // cannot see that message is you set "code-runner.runInTerminal" to true
+  // Whether to run code in Integrated Terminal (only support to run whole file in Integrated Terminal, neither untitled file nor code snippet) (default is false):
+  "code-runner.runInTerminal": true, // cannot input data when setting to false
+  // Whether to preserve focus on code editor after code run is triggered (default is true, the code editor will keep focus; when it is false, Terminal or Output Channel will take focus):
+  "code-runner.preserveFocus": false,
+  // Whether to ignore selection to always run entire file. (Default is false)
+  "code-runner.ignoreSelection": true,
+  "files.associations": {
+    "ios": "cpp",
+    "iostream": "cpp"
+  },
+  "files.exclude": {
+    "**/*.out": true,
+    "**/*.class": true,
+  },
+  // ---------------------------------------------------------------------
+}

@@ -27,8 +27,8 @@ Vulnerability Tsx async abort:   Not affected
 Flags:                           fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint
 Linux ubuntu-linux-20-04-desktop 5.15.0-46-generic #49~20.04.1-Ubuntu SMP Mon Aug 8 18:51:21 UTC 2022 aarch64 aarch64 aarch64 GNU/Linux
               total        used        free      shared  buff/cache   available
-Mem:        4005540     1217928      243284      294444     2544328     2313388
-Swap:       2097148       57088     2040060
+Mem:        4005540     1855036      214492      455892     1936012     1514272
+Swap:       2097148      154624     1942524
 Architecture:                    aarch64
 CPU op-mode(s):                  64-bit
 Byte Order:                      Little Endian
@@ -57,5 +57,5 @@ Vulnerability Tsx async abort:   Not affected
 Flags:                           fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint
 Linux ubuntu-linux-20-04-desktop 5.15.0-52-generic #58~20.04.1-Ubuntu SMP Thu Oct 13 13:10:09 UTC 2022 aarch64 aarch64 aarch64 GNU/Linux
               total        used        free      shared  buff/cache   available
-Mem:          3.8Gi       1.1Gi       183Mi       297Mi       2.6Gi       2.3Gi
+Mem:          3.8Gi       1.2Gi       129Mi       289Mi       2.5Gi       2.1Gi
 Swap:         2.0Gi       0.0Ki       2.0Gi
