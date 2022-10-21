@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-10-20 21:42:03
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-10-21 10:13:22
+ * @LastEditTime: 2022-10-21 15:50:32
  * @FilePath: /EE/Embeded-System/RaspberryPi4B.md
  * @Description: 
  * 
@@ -59,6 +59,8 @@ On your computer terminal `ssh username@ip_address`, default password is **raspb
 ssh 10.203.1.218 -l pi
 # or
 ssh pi@10.203.1.218
+# or
+ssh pi@raspberrypi.local
 ```
 
 ## Make the Pi automatically connect to Wi-Fi
