@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-10-20 21:42:03
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-10-21 15:50:32
+ * @LastEditTime: 2022-10-25 11:49:48
  * @FilePath: /EE/Embeded-System/RaspberryPi4B.md
  * @Description: 
  * 
@@ -63,6 +63,32 @@ ssh pi@10.203.1.218
 ssh pi@raspberrypi.local
 ```
 
+### Raspberry Pi SSH Access Denied
+
+[stack overflow Link](https://stackoverflow.com/questions/71804429/raspberry-pi-ssh-access-denied)
+
+Recently, the default usre setup of Raspbian was significantly changed, rendering most existing online tutorials invalid.
+
+In essence, the default `pi` user no longer exists, so you have to create it and set its passwod using either the official [Imager](https://www.raspberrypi.com/software/) tool or by creating a `userconf` file in the boot partition of your microSD card, which should contain a single line of text: `username:hashed-password`, replacing `username` with the name of the user you want (e.g., `pi`) and `hashed-password` with the hash of the password you want.
+
+According to the [official guide](https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/), the easiest way to do this is by running the following in a terminal(Linux or macOS) - use OpenSSL on a Raspberry Pi that is already running - open a terminal window and enter:
+
+```bash
+# run it in Raspberry Pi terminal
+echo 'raspberry' | openssl passwd -6 -stdin
+# you will get
+# $6$uSdJO/T1cf.0tRhI$BRXUD4TGUKNKBEPjvum2ynl.k/htXw.o7Wf8TyQw7J4KTq002JmJpshKw428FbCmhg68aLZBT7YeTK2EBCqrb0
+```
+
+This will produce what looks like a string of random characters, which is actually an encrypted version of the supplied password.
+
+```bash
+# in userconf file
+$6$uSdJO/T1cf.0tRhI$BRXUD4TGUKNKBEPjvum2ynl.k/htXw.o7Wf8TyQw7J4KTq002JmJpshKw428FbCmhg68aLZBT7YeTK2EBCqrb0
+```
+
+![imager by Raspberry Pi](https://i.stack.imgur.com/8vRMw.png)
+
 ## Make the Pi automatically connect to Wi-Fi
 
 Here create a file named “wpa_supplicant.conf” (remove any other extension like “.txt”).
@@ -89,6 +115,8 @@ The simplest way is to use **S**ecure **C**o**P**y from a Terminal Window (see a
 ```bash
 scp pi@10.203.1.244:/etc/wpa_supplicant/wpa_supplicant.conf .
 open ./
+
+sudo scp -r ./raspcopy pi@raspberrypi.local:/home/pi/Developer
 ```
 
 ## Update vs Upgrade
@@ -99,3 +127,4 @@ open ./
 The main difference is that `sudo apt-get update` fetches the latest version of the package list from your distro's software repository, and any third-party repositories you may have configured. In other words, it'll figure out what the latest version of each package and dependency is, but will not actually download or install any of those updates.
 
 The `sudo apt-get upgrade` command downloads and installs the updates for each outdated package and dependency on your system. But just running sudo apt-get upgrade will not automatically upgrade the outdated packages – you'll still have a chance to review the changes and confirm that you want to perform the upgrades.
+
