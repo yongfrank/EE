@@ -97,11 +97,13 @@
   "code-runner.ignoreSelection": true,
   "files.associations": {
     "ios": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "filtering_functions.h": "c"
   },
   "files.exclude": {
     "**/*.out": true,
     "**/*.class": true,
   },
+  "cSpell.enabled": false,
   // ---------------------------------------------------------------------
 }
