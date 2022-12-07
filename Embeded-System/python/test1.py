@@ -2,7 +2,7 @@
 Author: Frank Chu
 Date: 2022-11-01 10:22:49
 LastEditors: Frank Chu
-LastEditTime: 2022-11-01 10:30:50
+LastEditTime: 2022-12-06 00:47:15
 FilePath: /EE/Embeded-System/python/test1.py
 Description: 
 

@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-10-20 21:42:03
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-11-22 13:43:05
+ * @LastEditTime: 2022-12-05 23:14:57
  * @FilePath: /EE/Embeded-System/RaspberryPi4B.md
  * @Description: 
  * 
@@ -61,6 +61,40 @@ ssh 10.203.1.218 -l pi
 ssh pi@10.203.1.218
 # or
 ssh pi@raspberrypi.local
+```
+
+### SSH RSA ed25519
+
+```bash
+ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519
+# -o output
+
+# -a rounds
+#              When saving a private key, this option specifies the
+#              number of KDF (key derivation function, currently
+#              bcrypt_pbkdf(3)) rounds used.  Higher numbers result in
+#              slower passphrase verification and increased resistance
+#              to brute-force password cracking (should the keys be
+#              stolen).  The default is 16 rounds.
+
+# -t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
+#              Specifies the type of key to create.  The possible
+#              values are “dsa”, “ecdsa”, “ecdsa-sk”, “ed25519”,
+#              “ed25519-sk”, or “rsa”.
+
+# - Specify file in which to save the key:
+#     ssh-keygen -f ~/.ssh/filename
+
+cat .ssh/id_ed25519 | ssh foobar@remote 'cat >> ~/.ssh/authorized_keys'
+ssh-copy-id -i ~/.ssh/id_ed25519.pub yongfrank@franks-macbook-pro.local
+ssh-copy-id -i .ssh/id_ed25519.pub foobar@remote
+# -i identity_file
+# - Copy the given public key to the remote:
+#     ssh-copy-id -i path/to/certificate username@remote_host
+
+# - Copy the given public key to the remote with specific port:
+#     ssh-copy-id -i path/to/certificate -p port username@remote_host
+
 ```
 
 ### Raspberry Pi SSH Access Denied
@@ -203,21 +237,28 @@ EXAMPLES
 
 ```bash
 pinout
-gpio readall
+gpio readall 
+# gpio readall for a quick printout of your connector details
+
 
 gpio -g read 4
 gpio -g read 17
 
 gpio -g mode 4 out # -g BCM Coding no -g wiringPi
 gpio -g read 4
-gpio -g wirte 4 1 
+gpio -g write 4 1 
+
+# -g     Use  the  BCM_GPIO  pins numbers rather than wiringPi pin numbers.  
+            # Note:
+            #   The BCM_GPIO pin numbers are always used with the export  and  edge  com‐
+            #   mands.
 ```
 
 ## VNC
 
 [Cannot currently show the desktop](https://blog.csdn.net/qq_43619832/article/details/124243048?spm=1001.2014.3001.5502)
 
-【ラズパイ4】「Cannot currently show the desktop」エラーでデスクトップ画面が表示されない場合の対策 
+【ラズパイ4】「Cannot currently show the desktop」エラーでデスクトップ画面が表示されない場合の対策
 
 [link](https://algorithm.joho.info/raspberry-pi/cannot-currently-show-the-desktop-raspberry-pi/)
 
@@ -383,6 +424,19 @@ Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 003: ID 038f:6001 lihappe8 Corp. USB 2.0 Camera
 Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+# https://raspberrypi-guide.github.io/electronics/using-usb-webcams
+sudo fswebcam output.jpg
+
+sudo tldr fswebcam
+sudo fswebcam -r 1920x1080 --no-banner output.jpg
+# -r, --resolution <dimensions>
+#               Set the image resolution of the source or device. 
+#               The actual resolution used may differ if the source or device cannot
+#               capture at the specified resolution.
+
+#               Default is "384x288".
+scp output.jpg yongfrank@franks-macbook-pro.local:~
 ```
 
 2.树莓派图像、视频采集；
@@ -412,3 +466,13 @@ sudo raspivid -o - -t 0 -w 640 -h 360 -fps 25|cvlc -vvv stream:///dev/stdin --so
 [apt-get 报错怎么办： E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporary unavailable)](https://qiita.com/jizo/items/9496496a3156dd39d91a)
 
 [E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) [duplicate]](https://askubuntu.com/questions/346143/e-could-not-get-lock-var-lib-dpkg-lock-open-11-resource-temporarily-unavai)
+
+## GitHub Download specific folder
+
+Update Apr. 2021: there are a few tools created by the community that can do this for you:
+
+Download Directory (Credits to fregante)
+It has also been integrated into the excellent Refined Github chrome extension as a button in the Github web UI.
+GitZip (Credits to Kino - see his answer here)
+DownGit (Credits to Minhas Kamal - see his answer here)
+Note: if you're trying to download a large number of files, you may need to provide a token to these tools to avoid rate limiting.

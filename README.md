@@ -1,4 +1,18 @@
+<!--
+ * @Author: Frank Chu
+ * @Date: 2022-10-20 15:59:37
+ * @LastEditors: Frank Chu
+ * @LastEditTime: 2022-12-07 15:03:41
+ * @FilePath: /EE/README.md
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by Frank Chu, All Rights Reserved. 
+-->
 # This is a repository about Electronic Engineering
+
+## PYNQ-Z2
+
+[README for Xilinx PYNQ Z2](./Xilinx-PYNQ-Z2/README.md)
 
 ## Automatic Control Principles
 
