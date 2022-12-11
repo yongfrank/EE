@@ -1,0 +1,16 @@
+import socket
+import sys
+
+ip_to_connect = sys.argv[1]
+print("connecting to", ip_to_connect)
+
+with socket.socket() as client_socket:
+    client_socket.connect((ip_to_connect, 12345))
+    cpu = client_socket.recv(1024)
+    host = client_socket.recv(1024)
+    #ip = client_socket.recv(1024)
+    #platform = client_socket.recv(1024) 
+    print(cpu)
+    print(host)
+    #print(ip)
+    #print(platform)

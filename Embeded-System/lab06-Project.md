@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-11-29 10:17:13
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-12-06 13:15:56
+ * @LastEditTime: 2022-12-11 13:31:42
  * @FilePath: /EE/Embeded-System/lab06-Project.md
  * @Description: 
  * 
@@ -35,6 +35,8 @@
 ## 四、实验原理
 
 实验指导书-树莓派版-2022
+
+## 五、实验步骤及结果
 
 ### 1. Python 抓视频，做简单处理
 
@@ -193,10 +195,136 @@ cv2.destroyAllWindows()
 
 ### 3. 网络编程
 
+[Python 网络编程](https://www.runoob.com/python/python-socket.html)
 
+Python 提供了两个级别访问的网络服务：
+
+* 低级别的网络服务支持基本的 Socket，它提供了标准的 BSD Sockets API，可以访问底层操作系统 Socket 接口的全部方法。
+* 高级别的网络服务模块 SocketServer， 它提供了服务器中心类，可以简化网络服务器的开发。
+
+Socket又称"套接字"，应用程序通常通过"套接字"向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。
+
+Python 提供了一些内置模块来实现网络通信，包括用于 TCP 网络通信的 socket 模块。下面是一个简单的 Python 程序，实现了一个客户端和一个服务器端，使用 TCP 协议进行网络通信。
+
+```bash
+# 允许接入对应的端口
+sudo vim /etc/pf.conf
+rdr pass on lo0 inet proto tcp from any to any port 12345
+```
+
+```py
+# Server
+# 导入 socket、sys 模块
+import socket
+
+# 创建 socket 对象
+serversocket = socket.socket()
+
+# 获取本地主机名
+host = socket.gethostname()
+
+# 设置端口
+port = 12345
+
+# 绑定端口
+serversocket.bind((host, port))
+
+# 设置最大连接数，超过后排队
+serversocket.listen(5)
+
+while True:
+    # 建立客户端连接
+    clientsocket, addr = serversocket.accept()
+
+    # % 7.1.4. 旧式字符串格式化方法
+    # % 运算符（求余符）也可用于字符串格式化。给定 'string' % values，则 string 中的 % 实例会以零个或多个 values 元素替换。此操作被称为字符串插值。例如：
+    # >>>
+    # >>> import math
+    # >>> print('The value of pi is approximately %5.3f.' % math.pi)
+    # The value of pi is approximately 3.142.
+    # printf 风格的字符串格式化 小节介绍更多相关内容。
+    print("连接地址：%s" % str(addr))
+
+    msg = '成功连接到服务器，欢迎！' + "\r\n"
+    clientsocket.send(msg.encode('utf-8'))
+    clientsocket.close()
+```
+
+```py
+# client
+# 导入 socket 模块
+import socket
+
+# 创建 socket 对象
+s = socket.socket()
+
+# 获取本地主机名或者填入主机名/IP地址
+host = socket.gethostname()
+
+# 设置端口
+port = 12345
+
+# 连接服务，指定主机和端口
+s.connect((host, port))
+
+# 接收小于 1024 字节的数据
+msg = s.recv(1024)
+
+s.close()
+
+print(msg.decode('utf-8'))
+```
+
+```bash
+# 实现笔记本和树莓派之间的文件传输
+python -m http.server
+```
 
 ### 4. 界面编程
 
-## 五、实验步骤及结果
+[Build a Python GUI App in Apple M1](https://betterprogramming.pub/build-a-python-gui-app-in-apple-m1-e16098112e61)
+
+[mac下Qt缺失libiodbc.2.dylib和libpq.5.dylib解决方案](https://blog.csdn.net/yutianyue126/article/details/106911948)
+
+[OSX开发记录](https://yjdwbj.github.io/2021/05/24/OSX开发记录/)
+
+```bash
+pip install PyQt6
+pip install PySide6
+
+# Compile and pack all code in a distributable form. 
+# People usually call this process Freeze.
+pip install --upgrade cx_Freeze
+
+# https://stackoverflow.com/questions/4842448/getting-processor-information-in-python
+pip install py-cpuinfo
+```
+
+<!-- https://linuxhint.com/center-image-html/ -->
+<div style="text-align: center;">
+    <img src="https://miro.medium.com/max/692/1*xCmchVPjpXf4XlcuuClM3A.webp" alt="hello world python">
+</div>
+
+```py
+from PySide6.QtWidgets import QApplication,QLabel
+app   = QApplication([])
+label = QLabel('hello world')
+label.show()
+app.exec()
+
+```
+
+```bash
+# To compile your PyQt application, in your terminal, run:
+cxfreeze -c <python file name>.py --target-dir dist
+```
+
+<div style="text-align: center;">
+    <img src="https://miro.medium.com/max/1400/1*LXiEKwlQJ1fMgJvlTfdhaw.webp" alt="advanced gui">
+</div>
+
+<script src="https://gist.github.com/xhinker/40e5a86aab4da296e572daabcbf6b958.js"></script>
 
 ## 六、实验中碰到的问题及解决方案，总结
+
+本次实验中也有很多不了解的地方，但是均通过在搜索的过程中一一解决，和同学们进行讨论，很好的提高了对于课程的了解。
