@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-11-29 10:17:13
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-12-11 13:31:42
+ * @LastEditTime: 2022-12-13 13:01:30
  * @FilePath: /EE/Embeded-System/lab06-Project.md
  * @Description: 
  * 
@@ -40,9 +40,11 @@
 
 ### 1. Python 抓视频，做简单处理
 
-在画面的左上角绘制一个红色的圈圈
+在画面的左上角绘制一个红色的圈圈，下图为添加视频图标，视频拍摄过程中呈现图标。
 
 ![Red Circle](lab06T1RedCircle.png)
+
+![School Logo](./lab06-2.png)
 
 ```py
 import cv2 
@@ -311,7 +313,6 @@ app   = QApplication([])
 label = QLabel('hello world')
 label.show()
 app.exec()
-
 ```
 
 ```bash
@@ -324,6 +325,148 @@ cxfreeze -c <python file name>.py --target-dir dist
 </div>
 
 <script src="https://gist.github.com/xhinker/40e5a86aab4da296e572daabcbf6b958.js"></script>
+
+![lab06](./lab06.png)
+
+#### client code
+
+```py
+import socket
+import sys
+import pickle
+
+class SendInfo:
+    def __init__(self, cpu_info, host_name, ip_address, platform_info):
+        self.cpu_info = cpu_info
+        self.host_name = host_name
+        self.ip_address = ip_address
+        self.platform_info = platform_info
+
+def connectAndPrint(host_to_connect):
+    print("connecting to", host_to_connect)
+
+    with socket.socket() as client_socket:
+        client_socket.connect((host_to_connect, 12345))
+        
+        data = client_socket.recv(4096)
+        data_variable = pickle.loads(data)
+        
+        attributes = vars(data_variable)
+        for key, value in attributes.items():
+            print(key, ":", value)
+    # In Python, the variables inside a with statement will not be destroyed when the with block ends. Instead, the variables will continue to exist in the scope where they were defined, and can be accessed and used after the with block ends.
+    return data_variable
+
+if __name__ == "__main__":
+    ip_to_connect = sys.argv[1]
+    connectAndPrint(ip_to_connect)
+```
+
+#### client main
+
+```py
+'''
+Author: Frank Chu
+Date: 2022-12-11 15:08:51
+LastEditors: Frank Chu
+LastEditTime: 2022-12-11 17:56:34
+FilePath: /EE/Embeded-System/pyqt/info_gui.py
+Description: 【Python图形界面 15分钟快速入门PySide/PyQt】 
+https://www.bilibili.com/video/BV18F411W7y2/?share_source=copy_web&vd_source=bf4952280cde801b178268abc99a7047
+
+Copyright (c) 2022 by Frank Chu, All Rights Reserved. 
+'''
+from threading import Thread
+from PySide6.QtWidgets import QApplication, QMainWindow
+# PySide6-uic demo.ui -o ui_demo.py
+from ui_info_gui_design import Ui_MainWindow
+from info_client import connectAndPrint, SendInfo
+from info_mysignal import my_signal
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.bind()
+    
+    def bind(self):
+        # self.ui.hostnameLineEdit.setText("raspberrypi.local")
+        self.ui.hostnameLineEdit.setText("frank-parallels-vm.local")
+        # self.ui.hostnameLineEdit.setText("10.203.1.120")
+
+        my_signal.setEditLine.connect(self.set_line_edit)
+        self.ui.getInfoPushButton.clicked.connect(self.handle_click)
+        def inner_thread():
+            self.connectToRemote()
+        task = Thread(target=inner_thread)
+        task.start()
+    
+    def connectToRemote(self):
+        try:
+            host = self.ui.hostnameLineEdit.text()
+            remote_system_info = connectAndPrint(host_to_connect=host)
+            self.set_line_edit(remote_system_info)
+        except:
+            print("Please input a valid hostname")
+    
+    def set_line_edit(self, info: SendInfo):
+        self.ui.hostnameLineEdit.setText(info.host_name)
+        self.ui.ipAddressLineEdit.setText(info.ip_address)
+        self.ui.processorLineEdit.setText(info.cpu_info)
+        self.ui.osLineEdit.setText(info.platform_info)
+        
+    
+    def handle_click(self):
+        def side_thread():
+            self.connectToRemote()
+        task = Thread(target=side_thread)
+        task.start()
+        
+    
+if __name__ == '__main__':
+    app = QApplication([])
+    window = MainWindow()
+    window.show()
+    app.exec()
+```
+
+#### server code
+
+```py
+import socket
+import platform
+import pickle
+
+host = '0.0.0.0'
+port = 12345
+
+class SendInfo:
+
+    def __init__(self, cpu_info, host_name, ip_address, platform_info):
+        self.cpu_info = cpu_info
+        self.host_name = host_name
+        self.ip_address = ip_address
+        self.platform_info = platform_info
+
+cpu_info = platform.processor() 
+host_name = socket.gethostname()
+ip_address = socket.gethostbyname(host_name)
+platform_info = platform.platform()
+
+info_to_be_send = SendInfo(cpu_info, host_name, ip_address, platform_info)
+# https://stackoverflow.com/questions/15190362/sending-a-dictionary-using-sockets-in-python
+data_string = pickle.dumps(info_to_be_send)
+print("Please connect to", ip_address)
+
+with socket.socket() as server_socket:
+    server_socket.bind((host, port))
+    server_socket.listen()
+
+    while True:
+         client_socket, address = server_socket.accept()
+         client_socket.send(data_string)
+```
 
 ## 六、实验中碰到的问题及解决方案，总结
 
