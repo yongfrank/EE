@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2022-12-07 15:03:30
  * @LastEditors: Frank Chu
- * @LastEditTime: 2022-12-10 16:54:59
+ * @LastEditTime: 2023-02-27 23:27:36
  * @FilePath: /EE/Xilinx-PYNQ-Z2/README.md
  * @Description: 
  * 
@@ -220,3 +220,28 @@ Kaiser 窗广泛应用于信号处理，如频谱分析、信号平滑、声音�
 平滑信号的边缘是指对信号的起始和结束部分进行平滑处理，使信号的变化更平缓，减少信号的频谱泄露。
 
 频谱泄露是指信号在频谱上的不连续性，导致信号在频谱上出现突变，从而影响信号处理的精度。平滑信号的边缘可以通过使用窗口函数来实现，例如汉明窗和 Kaiser 窗。这些窗口函数可以将信号的起始和结束部分平滑处理，使信号的变化更平缓，减少信号的频谱泄露，提高信号处理的精度。
+
+(1) Conversation with Bing, 2/27/2023(1) GitHub - Xilinx/PYNQ: Python Productivity for ZYNQ. https://github.com/Xilinx/PYNQ Accessed 2/27/2023.
+(2) GitHub - tom01h/PYNQ: PYNQ を Arty Z7 20 と Ultra96 と Kria .... https://github.com/tom01h/PYNQ Accessed 2/27/2023.
+(3) GitHub - Xilinx/PYNQ: Python Productivity for ZYNQ. https://github.com/Xilinx/PYNQ Accessed 2/27/2023.
+(4) PYNQ - Python productivity for Zynq - Home. http://www.pynq.io/ Accessed 2/27/2023.
+(5) PYNQ - Python productivity for Zynq - Home. http://www.pynq.io/ Accessed 2/27/2023.
+(6) XUP PYNQ-ZU - Xilinx. https://www.xilinx.com/support/university/xup-boards/XUPPYNQ-ZU.html Accessed 2/27/2023.
+(7) GitHub - Xilinx/PYNQ: Python Productivity for ZYNQ. https://github.com/Xilinx/PYNQ Accessed 2/27/2023.
+(8) XUP PYNQ-Z2 - Xilinx. https://www.xilinx.com/support/university/xup-boards/XUPPYNQ-Z2.html Accessed 2/27/2023.
+(9) Releases · Xilinx/PYNQ · GitHub. https://github.com/Xilinx/PYNQ/releases Accessed 2/27/2023.
+
+关于xilinx Pynq 语音滤波和回放的相关知识，我可以给您做一个简短的总结：
+
+- PYNQ是一个开源项目，它使得设计师可以使用Python语言和库来设计基于Zynq的嵌入式系统¹²。
+- Zynq是一种可编程系统芯片（APSoC），它集成了ARM处理器和可编程逻辑³。
+- 语音滤波是一种对语音信号进行处理的技术，它可以去除噪声、增强清晰度或改变频率特性。
+- 语音回放是一种对语音信号进行存储和重现的技术，它可以用于录音、播放或变声等应用。
+- PYNQ可以利用Zynq的可编程逻辑来实现高性能的语音滤波和回放功能，并且可以使用Python进行快速开发和测试。
+
+由于屏幕空间有限，我只能给您提供一个大概的概述。如果您想了解更多细节，请访问以下链接：
+https://www.bing.com/search?q=xilinx+Pynq+%E8%AF%AD%E9%9F%B3%E6%BB%A4%E6%B3%A2%E5%92%8C%E5%9B%9E%E6%94%BE
+
+Source: Conversation with Bing, 2/27/2023(1) GitHub - Xilinx/PYNQ: Python Productivity for ZYNQ. https://github.com/Xilinx/PYNQ Accessed 2/27/2023.
+(2) PYNQ - Python productivity for Zynq - Home. http://www.pynq.io/ Accessed 2/27/2023.
+(3) XUP PYNQ-ZU - Xilinx. https://www.xilinx.com/support/university/xup-boards/XUPPYNQ-ZU.html Accessed 2/27/2023.

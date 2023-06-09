@@ -2,7 +2,7 @@
 Author: Frank Chu
 Date: 2022-12-11 15:08:51
 LastEditors: Frank Chu
-LastEditTime: 2022-12-11 17:56:34
+LastEditTime: 2022-12-14 17:57:45
 FilePath: /EE/Embeded-System/pyqt/info_gui.py
 Description: 【Python图形界面 15分钟快速入门PySide/PyQt】 
 https://www.bilibili.com/video/BV18F411W7y2/?share_source=copy_web&vd_source=bf4952280cde801b178268abc99a7047
